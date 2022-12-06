@@ -1,0 +1,113 @@
+@use "variables"
+
+body
+    height: 100vh
+    margin: 0
+    background: variables.$primary-color
+    color: variables.$ligth-color
+    
+
+.content
+    background: variables.$tertiary-color
+    display: flex
+    flex-flow: row
+    justify-content: space-between
+    
+
+    section, aside
+        flex-basis: auto
+        background-color: variables.$quaternary-color
+    
+    section
+        padding: 0 20px
+        width: 15vw
+        flex-grow: 0.3
+        text-align: justify
+
+    aside
+        flex-grow: 4
+        table
+            margin: 0 auto
+
+            thead
+                background-color: variables.$quinary-color
+                
+
+            td
+                border: 1px solid variables.$quinary-color
+
+
+            
+    
+    footer
+        display: flex
+        flex-flow: column
+        justify-content: center
+        align-items: center
+        height: 18vh
+        background-color: variables.$secundary-color
+
+        div
+            flex-grow: 1
+            flex-basis: auto
+        
+        ul
+            list-style-type: none
+            padding: 0
+            margin: 0
+
+            li
+                display: inline-block
+                padding: 0px 2px
+                align-items: center
+
+span
+    color: variables.$emphasized-color
+    font-weight: 600
+
+.checkbox
+    flex-grow: 4
+    flex-basis: auto
+    text-align: center
+
+.checknumbers
+    height: 80vh
+    overflow: auto
+    padding: 1vh
+    
+    button
+        width: 55px
+        background-color: variables.$secundary-color
+        color: variables.$ligth-color
+        border: none
+        border-radius: 5px
+        margin: 0px
+
+    h2
+        button
+            width: 10vw
+            font-size: .7em
+
+    #submmit
+        padding: 1vh
+        background-color: variables.$quaternary-color
+        width: 15vw
+        margin-top: 40px
+        border: 1 ridge
+        color: variables.$ligth-color
+
+    #result
+        padding: 1vh
+        color: variables.$ligth-color
+
+
+.qrcode
+    width: 30vw
+    height: 60vh
+    top: 10vh
+    left: 35vw
+    color: variables.$primary-color
+    text-align: center
+    position: absolute
+    background: variables.$qrcode-color-background
+    z-index: 2

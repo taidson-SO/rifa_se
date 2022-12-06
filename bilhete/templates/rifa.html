@@ -1,0 +1,130 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rifa</title>
+    <link rel="stylesheet" href="{% static 'css/rifa.css'%}"  type="text/css">
+</head>
+
+<body>
+
+    <div class="content">
+
+        {% if username == None %}
+            <div class="qrcode" hidden>
+                <p>
+                    <h3>QR Code</h3>
+                    <img src="" alt="" srcset="">
+                    <form action="#">
+                        <label for="name">Nome: </label>
+                        <input type="text" name="name" id="name">
+                    </form>
+                    
+                </p>
+            </div>
+        {% endif %}
+
+        <section>
+            <h1>Rifa-me</h1>
+            <p>
+                É uma rifa online onde você escolhe até dez números e concorre ao premio descrito na tabela de premiações. Basta acertar um unico número para ganhar.
+                E você ainda ajuda pessoas que precisam, já que noventa porcento do valor será destinado a pessoas nescessitadas e causas sociais.
+            </p>
+        </section>
+        
+        <div class="checkbox">
+
+            <div class="checknumbers">
+            
+                {% if random %}        
+            
+                    <span>Número selecionado:</span>
+                    <h1 id="result" disabled> {{random}}</h1>
+                    
+                    {% if win %}
+                
+                        <h2 id="win" disabled>Párabens você ganhou! {{valor}}</h2>
+                        <div>
+                            <h2>Receba seu premio:</h2>
+                            <form action="/" method="post">
+                                <label for="pixpagar">Chave pix: </label>
+                                <input type="text" name="pixpagar" id="pipagar">
+                                <button>Receber</button>
+                            </form>
+                        </div>
+                        <h2>
+                        <button onclick="location.href='/rifa'" type="button">Jogar novamente!</button></h2>
+
+                    {% else %}
+
+                        <h2 id="win"><button onclick="location.href='/rifa'" type="button">Tente novamente</button>, você terá melhor sorte na próxima!</h2>
+                    
+                    {% endif %}
+                {% else %}
+    
+                    <form action="gerar" method="POST">
+                        {% csrf_token %}
+                        {% for i in numbers %}
+                            <button autocomplete='off' disabled>
+                                <label for="button{{i}}">{{i}}</label>
+                                <input class="ibtn" type="checkbox" name="buttonnnumber" value="{{i}}" id="button{{i}}" onclick="chekedbtn(id)">
+                            </button>
+                                {% if forloop.counter|divisibleby:"16" and not forloop.last %}<br>{% endif %}
+                        {% endfor %}
+                        
+                        <br>
+                        <input id="submmit" type="submit" value="Enviar">
+                    </form>
+        
+                {% endif %}
+            </div>
+                    
+            <footer>
+                <div><span>Números escolhidos:</span></div>
+                    
+                    <div>
+                        <ul id="numbers">
+                            {% if selected|length == 0 %}
+                                <li id='zero'>Nenhum número escolhido!</li>
+                            {% else %}
+                                {% for i in selected %}
+                                    {{ i }}
+                                {% endfor %}
+                            {% endif %}
+                            
+                        </ul>
+                    </div>
+                    
+                <p><span>Valor da aposta</span>:<em id="aposta">
+                    {% if valor %}
+                        R${{selected|length}},00
+                    {% endif %}
+                </em></p> 
+            </footer>
+        </div>
+        
+        <aside>
+            <table>
+                <thead>
+                    <th>Aposta</th>
+                    <th>Recebe</th>
+                </thead>
+                <tbody>
+                    {% for i in price %}
+                        <tr>
+                            <td>R${{forloop.counter}},00</td>
+                            <td>R${{i}},00</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </aside>
+</div>
+    <script src="{% static 'js/rifa.js' %}" DEFER="DEFER"></script>
+</body>
+</html>
