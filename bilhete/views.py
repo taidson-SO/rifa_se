@@ -1,6 +1,8 @@
 from django.shortcuts import render, HttpResponse
 from .source.comb2 import Comb2
+from copy import deepcopy
 import random
+
 
 #ref is the number of digits in a raffle number
 ref = ['0','0']
@@ -23,17 +25,23 @@ def rifa(request):
 def gerarNumero(request):
     #select random number.
     num_s = numbers[:240]
-    random.shuffle(num_s)
-    num_r = random.choice(num_s)
+    num_r = deepcopy(num_s)
+    random.shuffle(num_r)
+    num_r = random.choice(num_r)
     
     #verify selected numbers
     if request.method == 'POST':
         selected = request.POST.getlist('buttonnnumber')
+        # for i in selected:
+        #     if i not in num_s:
+        #         return HttpResponse("deu erro")
         if selected == []:
-            return render(request, 'rifa.html', {'numbers': num_s,'random':num_r,'price':price,'selected':selected})
+            print("entrou")
+            return render(request, 'rifa.html', {'numbers': num_s,'price':price,'selected':selected})
     
     if num_r in selected:
         # pagar pix ao jogador
+        
         win = True
     else:
         # receber pix do jogador
